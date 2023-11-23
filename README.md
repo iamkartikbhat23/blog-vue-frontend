@@ -1,6 +1,12 @@
 # blog-vue-frontend
 Vue 3 App that utilizes Laravel API to serve Blog Application (BLOG CRUD)
 
+Run 
+
+```
+npm install
+```
+to get all the dependencies of the application
 
 Used Vue3 Composition API to build front end of the blog application
 
