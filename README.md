@@ -8,9 +8,18 @@ npm install
 ```
 to get all the dependencies of the application
 
-Used Vue3 Composition API to build front end of the blog application
+Used following to build front end of the blog application
+* Composition API
+* Tailwind CSS
+* Pinia
+* axios
+* vue-router
+* notyf
+* sweetalert2 
 
-Includes
+
+
+Application Includes
 * Login
 * Register
 * Blogs List
