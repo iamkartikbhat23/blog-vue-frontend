@@ -32,3 +32,6 @@ Application Includes
 * Like Blogs
 
 Its Laravel API serving application is available here : (https://github.com/iamkartikbhat23/blog-laravel-api)
+
+
+Run the laravel API at port ```8001``` instead of default ```8000``` port
