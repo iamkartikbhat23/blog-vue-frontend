@@ -26,7 +26,7 @@ Application Includes
 * Blog View
 * Author Specific Blogs
 * Create Blog (after login)
-* List own blogs
+* List own blogs (after login)
 * Edit own blog (after login)
 * Delete own blog (after login)
 * Like Blogs
