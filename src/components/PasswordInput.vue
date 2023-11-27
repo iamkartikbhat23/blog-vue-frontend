@@ -5,7 +5,7 @@
             <LabelText :labelText="'Password'" />
             <input 
                 type="password" 
-                class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" 
+                class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 dark:text-gray-100 dark:bg-slate-600" 
                 :class="errors.password ? 'border-red-500' : ''"
                 placeholder="Enter password"
                 autocomplete="off"
@@ -22,7 +22,7 @@
             <LabelText :labelText="'Confirm Password'" />
             <input 
                 type="password" 
-                class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" 
+                class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 dark:text-gray-100 dark:bg-slate-600" 
                 :class="errors.confirmPassword ? 'border-red-500' : ''"
                 placeholder="Enter password"
                 autocomplete="off"

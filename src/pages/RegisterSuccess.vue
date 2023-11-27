@@ -7,11 +7,11 @@
             </svg>
 
             <div class="text-2xl">Registration Success</div>
-            <Button :class="'w-full'">
-                <RouterLink :to="{ name: 'login' }" class="text-white hover:text-white">
+            <RouterLink :to="{ name: 'login' }" class="text-white hover:text-white">
+                <Button :class="'w-full'">
                     Login  
-                </RouterLink>   
-            </Button>
+                </Button>
+            </RouterLink>   
         </div>
       </template>
     </GuestLayout>

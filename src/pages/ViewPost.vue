@@ -1,11 +1,11 @@
 <template>
     <AppLayout>
-        <div v-if="postsStore.loading" class="w-full h-72 flex items-center justify-center">
-                Loading Blogs
+        <div v-if="postsStore.loading" class="w-full h-screen flex items-center justify-center">
+            <Loader />
         </div>
         <div v-if="!postsStore.loading" class="w-full md:w-[80rem] flex flex-col justify-start h-auto my-20 gap-4">
             <div class=" sticky top-0 start-0 flex justify-between">
-                <div class="text-gray-700 text-xl md:text-3xl capitalize text-left">{{ postsStore.post?.title }}</div>
+                <div class="text-gray-700 dark:text-gray-100 text-xl md:text-3xl capitalize text-left">{{ postsStore.post?.title }}</div>
                 <div v-if="postsStore.isCurrentBlogsAuthor">
                     <PostActionButtons :post_id="postsStore.post?.id" :type="'page'"/>
                 </div>
@@ -30,7 +30,7 @@
                     </button>
                 </div>
             </div>
-            <div class="flex justify-between text-gray-500 text-base md:text-lg px-3">
+            <div class="flex justify-between text-gray-500 dark:text-gray-100 text-base md:text-lg px-3">
                 <div class="flex gap-2 items-center">
                     by <div class="italic">
                         <RouterLink :to="{ name: 'authorPosts', params : {author_id:postsStore.post?.author_id} }">
@@ -39,12 +39,12 @@
                     </div>
                     <div class="flex gap-2 text-sm">on <div class="italic">{{ postsStore.post?.created_on }}</div></div>
                 </div>
-                <div class="font-bold text-gray-800 text-xl">{{ postsStore.post?.likes }} Likes</div>
+                <div class="font-bold text-gray-800 dark:text-gray-100 text-xl">{{ postsStore.post?.likes }} Likes</div>
             </div>
-            <img class="w-full h-full rounded-md" loading="lazy" alt="No Image" :src="postsStore.post?.image" />
-            <div class="first-letter:-mt-1 first-letter:ml-4 first-letter:text-3xl md:first-letter:text-6xl first-letter:font-bold first-letter:text-slate-900 first-letter:float-left md:px-2 text-gray-700 text-lg md:text-xl text-left">{{ postsStore.post?.body }}</div>
+            <img class="w-full h-full rounded-md border dark:border-purple-300" loading="lazy" alt="No Image" :src="postsStore.post?.image" />
+            <div class="break-all first-letter:-mt-1 first-letter:ml-4 first-letter:text-3xl md:first-letter:text-6xl first-letter:font-bold first-letter:text-slate-900 dark:first-letter:text-slate-300 first-letter:float-left md:px-2 text-gray-700 dark:text-gray-300 text-lg md:text-xl text-left">{{ postsStore.post?.body }}</div>
             <hr class="my-10">
-            <div class="flex justify-center font-bold text-2xl px-2">Other recent blogs from {{ postsStore.post?.author }}</div>
+            <div class="flex justify-center font-bold text-2xl px-2 dark:text-gray-200">Other recent blogs from {{ postsStore.post?.author }}</div>
             <div v-if="!postsStore.loading" class="grid grid-col-1 grid-row-1 md:grid-cols-3 gap-5 text-left my-10">
                 <Posts :posts="postsStore.posts"/>
             </div>
@@ -52,6 +52,7 @@
     </AppLayout>
 </template>
 <script setup>
+    import Loader from '../components/Loading.vue';
     import AppLayout from '../layouts/AppLayout.vue' ;
     import Posts from '../components/Posts.vue';
     import PostActionButtons from '../components/PostActionButtons.vue';

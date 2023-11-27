@@ -9,6 +9,11 @@ import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; 
 import axios from 'axios';
 axios.defaults.baseURL = 'http://127.0.0.1:8001/api/';
+axios.defaults.headers = {
+  'Content-Type': 'application/json',
+}
+// axios.defaults.baseURL = 'https://blogs.kartikbhat.tech/api/';
+
 import { userAuthStore } from './stores/auth'
 import setAuthHeader from "./utils/setAuthHeader";
 

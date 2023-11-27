@@ -2,22 +2,22 @@
     <AppLayout>
         <div class="min-w-[20rem] md:w-[80rem] flex flex-col items-center justify-center my-16" >
             <div class="w-full h-full flex flex-col gap-5 items-start mb-10">
-                <div class="text-3xl font-semibold text-gray-700">Create Post</div>
+                <div class="text-3xl font-semibold text-gray-700 dark:text-gray-100">Create Post</div>
                 <hr>
                 <div class="flex flex-col items-start w-full">
                     <Label labelText="Blog Title" class="font-semibold text-xl"/>
                     <input @keyup="validateEntries" v-model="blog.title" type="text" placeholder="Enter Blog title" 
-                            class="w-full border focus:outline-purple-400 shadow-lg focus:shadow-xl shadow-purple-200 rounded-md px-4 py-2 placeholder:italic " 
-                            :class="blog.titleError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 placeholder:text-purple-400' " />
-                    <div class="text-sm text-red-600" :class="blog.titleError!=null ? 'block' : 'hidden'">{{ blog.titleError }}</div>
+                            class="w-full border focus:outline-purple-400 shadow-lg focus:shadow-xl dark:shadow-md shadow-purple-200 rounded-md px-4 py-2 placeholder:italic dark:text-gray-100 dark:bg-slate-600" 
+                            :class="blog.titleError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 dark:border-purple-100 placeholder:text-purple-400' " />
+                    <div class="text-sm text-red-600 py-1" :class="blog.titleError!=null ? 'block' : 'hidden'">{{ blog.titleError }}</div>
                 </div>
                 <div class="flex flex-col items-start w-full">
                     <Label labelText="Blog Description" class="font-semibold text-xl"/>
                     <textarea @keyup="validateEntries" v-model="blog.body" rows="15" type="text" placeholder="Enter blog description here" 
-                        class="w-full resize-none border  focus:outline-purple-400 shadow-lg focus:shadow-xl shadow-purple-200 rounded-md px-2 py-2 placeholder:italic "
-                        :class="blog.bodyError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 placeholder:text-purple-400' "
+                        class="w-full resize-none border  focus:outline-purple-400 shadow-lg dark:shadow-md focus:shadow-xl shadow-purple-200 rounded-md px-2 py-2 placeholder:italic dark:text-gray-100 dark:bg-slate-600"
+                        :class="blog.bodyError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 dark:border-purple-100 placeholder:text-purple-400' "
                     ></textarea>
-                    <div class="text-sm text-red-600" :class="blog.bodyError!=null ? 'block' : 'hidden'">{{ blog.bodyError }}</div>
+                    <div class="text-sm text-red-600 py-1" :class="blog.bodyError!=null ? 'block' : 'hidden'">{{ blog.bodyError }}</div>
                 </div>
                 <div class="flex w-full justify-end">
                     <button 

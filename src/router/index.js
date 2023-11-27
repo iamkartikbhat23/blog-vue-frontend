@@ -67,8 +67,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    console.log('position ');
-    console.log(savedPosition);
     if (savedPosition) {
       return savedPosition
     } else {
@@ -80,6 +78,8 @@ const router = createRouter({
 export default router ;
 
 router.beforeEach(async (to,from) => {
-  const authStore = userAuthStore() ;
-  authStore.setReturnUrl(from.fullPath);
+  if(from.name !== 'login') {
+    const authStore = userAuthStore() ;
+    authStore.setReturnUrl(from.fullPath);
+  }
 });

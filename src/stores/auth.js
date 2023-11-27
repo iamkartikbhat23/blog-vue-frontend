@@ -74,7 +74,6 @@ export const userAuthStore  = defineStore("auth", () => {
         axios.post('login',user)
               .then(response => { 
                 const apiResponse = response.data ;
-                console.log(apiResponse) ;
                 if(response.status == 200) {
                   if(apiResponse.success) {
                     notyf.success(apiResponse.message);
@@ -90,7 +89,9 @@ export const userAuthStore  = defineStore("auth", () => {
                     setTimeout(() => {
                         notyf.success('Hi '+apiResponse.data.user.name);
                     },3500);
-                    if(returnUrl.value!=null) {
+                    console.log("Return URL") ;
+                    console.log(returnUrl.value) ;
+                    if(returnUrl.value!=null && returnUrl.value!=='/register-success') {
                         router.push(returnUrl.value)
                     } else {
                         router.push('/')

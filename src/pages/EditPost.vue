@@ -2,19 +2,19 @@
     <AppLayout>
         <div class="min-w-[20rem] md:w-[80rem] flex flex-col items-center justify-center my-16" >
             <div class="w-full h-full flex flex-col gap-5 items-start mb-10">
-                <div class="text-3xl font-semibold text-gray-700">{{ props.type=='edit' ? 'Edit' : 'Create' }} Post</div>
+                <div class="text-3xl font-semibold text-gray-700 dark:text-gray-100"> Edit'Post</div>
                 <hr>
                 <div class="flex flex-col items-start w-full">
                     <Label labelText="Blog Title" class="font-semibold text-xl"/>
-                    <input @keyup="validateEntries" v-model="blog.title" type="text" placeholder="Enter Blog title" 
-                            class="w-full border focus:outline-purple-400 shadow-lg focus:shadow-xl shadow-purple-200 rounded-md px-4 py-2 placeholder:italic " 
+                    <input @keyup="validateEntries" v-model="postStore.post.title" type="text" placeholder="Enter Blog title" 
+                            class="w-full border focus:outline-purple-400 shadow-lg dark:shadow-md focus:shadow-xl shadow-purple-200 rounded-md px-4 py-2 placeholder:italic dark:text-gray-100 dark:bg-slate-600" 
                             :class="blog.titleError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 placeholder:text-purple-400' " />
                     <div class="text-sm text-red-600" :class="blog.titleError!=null ? 'block' : 'hidden'">{{ blog.titleError }}</div>
                 </div>
                 <div class="flex flex-col items-start w-full">
                     <Label labelText="Blog Description" class="font-semibold text-xl"/>
-                    <textarea @keyup="validateEntries" v-model="blog.body" rows="15" type="text" placeholder="Enter blog description here" 
-                        class="w-full resize-none border  focus:outline-purple-400 shadow-lg focus:shadow-xl shadow-purple-200 rounded-md px-2 py-2 placeholder:italic "
+                    <textarea @keyup="validateEntries" v-model="postStore.post.body" rows="15" type="text" placeholder="Enter blog description here" 
+                        class="w-full resize-none border  focus:outline-purple-400 shadow-lg dark:shadow-md focus:shadow-xl shadow-purple-200 rounded-md px-2 py-2 placeholder:italic dark:text-gray-100 dark:bg-slate-600"
                         :class="blog.bodyError ? 'border-red-500 placeholder:text-red-400' : 'border-purple-900 placeholder:text-purple-400' "
                     ></textarea>
                     <div class="text-sm text-red-600" :class="blog.bodyError!=null ? 'block' : 'hidden'">{{ blog.bodyError }}</div>
@@ -27,19 +27,18 @@
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                         </svg>
                         <div>
-                            Save
+                            Update
                         </div>
                     </button>
                 </div>
-                <div>{{ postStore.post?.title }}</div>
-                <div>{{ postStore.post?.body }}</div>
                 <div></div>
             </div>
         </div>
     </AppLayout>
 </template>
 <script setup>
-import { reactive,onMounted } from 'vue'
+import { onMounted } from 'vue'
+import Swal from 'sweetalert2';
 import Label from "../components/Label.vue";
 import AppLayout from '../layouts/AppLayout.vue' ;
 import { userAuthStore } from "../stores/auth" ;
@@ -51,38 +50,34 @@ const props = defineProps({
         type: String,
     }
 })  ;
-console.log('page props');
-console.log(props);
 const userStore = userAuthStore() ;
 const postStore = usePostsStore() ;
 
 postStore.getPostDetail(props.post_id)
 
 let blog = {
-    title: postStore.post?.title ?? '',
-    body: postStore.post?.body ?? '',
     titleError:null,
     bodyError:null,
 };
 onMounted(async () => {
-    postStore.getPostDetail(props.post_id)
+    postStore.getPostDetail(props.post_id) 
 }) ;
 
 
 const validateEntries = () => {
-    if(blog.title == "") {
+    if(postStore.post.title == "") {
         blog.titleError = "Title is needed for Blog"
     }  else {
-        if(blog.title.length < 10) {
+        if(postStore.post.title.length < 10) {
             blog.titleError = "Title should contain at least 10 characters"
         } else {
             blog.titleError = null ;
         }
     }
-    if(blog.body == "") {
+    if(postStore.post.body == "") {
         blog.bodyError = "Description is needed for Blog"
     }  else {
-        if(blog.body.length < 100) {
+        if(postStore.post.body.length < 100) {
             blog.bodyError = "Description should contain at least 50 characters"
         } else {
             blog.bodyError = null ;
@@ -95,18 +90,31 @@ const validateEntries = () => {
     return false ;
 } ;
 
-const validateBlogContent = () => {
+const validateBlogContent = ()  => {
     const validationStatus = validateEntries();
 
     if(validationStatus) {
         const blogData = {
-            title: blog.title,
-            body: blog.body,
+            title: postStore.post.title,
+            body: postStore.post.body,
         } ;
-       const status =  postStore.savePost(blogData) ;
-       if (status) {
-            router.push({ name: 'authorPosts', params: {  author_id:userStore.user.id,is_author_user: true }}) ;
-       }
+        Swal.fire({
+            title: "Update this blog",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, update it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const status = await postStore.updatePost() ;
+                if (status) {
+                    router.push({ name: 'authorPosts', params: {  author_id:userStore.user.id,is_author_user: true }}) ;
+                }
+            }
+        });
+       
     }
 } ;
 </script>

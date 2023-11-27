@@ -26,9 +26,6 @@ const props = defineProps({
     }
 }) ;
 
-console.log("actions") ;
-console.log(props) ;
-
 const postStore = usePostsStore() ;
 const deleteBlog = (id) => {
     

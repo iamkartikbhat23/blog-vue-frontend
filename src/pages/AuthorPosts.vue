@@ -1,13 +1,13 @@
 <template>
     <AppLayout :key="router.fullPath">
-        <div class="min-w-[20rem] md:w-[80rem] flex flex-col items-center justify-center h-auto my-16" >
+        <div class="md:min-w-7xl max-w-7xl flex flex-col items-center justify-center h-auto my-16" >
             <div class="flex w-full items-center" v-if="!postsStore.loading">
                 <div class="flex w-full justify-between items-center text-lg md:text-2xl py-3">
-                    <div v-if="props.is_author_user" class="flex justify-center font-bold px-2">Your Blogs</div>
-                    <div v-else class="flex justify-center font-bold px-2" v-if="postsStore.authorPostsCount">Blogs From {{ postsStore.posts[0].author }}</div>
+                    <div v-if="props.is_author_user" class="flex justify-center font-bold px-2 dark:text-gray-200">Your Blogs</div>
+                    <div v-else class="flex justify-center font-bold px-2 dark:text-gray-200" v-if="postsStore.authorPostsCount">Blogs From {{ postsStore.posts[0].author }}</div>
                 </div>
                 <div class="flex w-full justify-end items-center gap-2">
-                    <div class="hidden md:block  " v-if="postsStore.authorPostsCount"
+                    <div class="hidden md:block dark:text-gray-400" v-if="postsStore.authorPostsCount"
                         :class="postsStore.isCurrentBlogsAuthor ? 'px-4 border-r border-gray-600' : ''">
                         Total {{ postsStore.authorPostsCount }} Blogs
                     </div>
@@ -27,18 +27,20 @@
                     </RouterLink>
                 </div>
             </div>
-            <div class="md:hidden w-full flex justify-end" v-if="postsStore.authorPostsCount">Total {{ postsStore.authorPostsCount }} Blogs</div>
+            <div class="md:hidden w-full flex justify-end dark:text-gray-400" v-if="postsStore.authorPostsCount">Total {{ postsStore.authorPostsCount }} Blogs</div>
+            
+            <div v-if="postsStore.loading" class="w-full h-screen flex items-center justify-center">
+                <Loader />
+            </div>
             <div ref="scrollComponent" class="grid grid-col-1 grid-row-1 md:grid-cols-3 gap-5 text-left mt-5 mb-10 min-h-min">
                 <Posts v-if="postsStore.authorPostsCount" :posts="postsStore.posts"/>
-                <div v-if="!postsStore.authorPostsCount && !postsStore.loading" class="flex justify-center items-center h-44 col-span-3 text-2xl font-bold">No Blogs Found</div>
-            </div>
-            <div v-if="postsStore.loading" class="w-full h-full flex items-center justify-center">
-                Loading Blogs
+                <div v-if="!postsStore.authorPostsCount && !postsStore.loading" class="flex justify-center items-center h-44 col-span-3 text-2xl font-bold dark:text-gray-400">No Blogs Found</div>
             </div>
         </div>
     </AppLayout>
 </template>
 <script setup>
+    import Loader from '../components/Loading.vue';
     import AppLayout from '../layouts/AppLayout.vue' ;
     import { onMounted,onUnmounted,ref,watchEffect  } from "vue" ;
     import { usePostsStore } from '../stores/posts' ;
@@ -54,9 +56,7 @@
             type: Boolean,
             default:false
         }
-    })   
-    console.log('author_id received')
-    console.log(props.author_id)
+    }) 
     const userStore = userAuthStore() ;
     const scrollComponent = ref(null) ;
 

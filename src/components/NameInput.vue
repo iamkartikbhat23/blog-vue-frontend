@@ -3,7 +3,7 @@
         <LabelText :labelText="'Full Name'" />
         <input 
             type="text" 
-            class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" 
+            class="px-4 py-2 border focus:ring-gray-500 focus:border-purple-400 focus:shadow-sm focus:shadow-purple-400 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 dark:text-gray-100 dark:bg-slate-600" 
             :class="errors.name ? 'border-red-500' : ''"
             placeholder="Enter your full name"
             autocomplete="off"

@@ -1,4 +1,3 @@
-import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import { userAuthStore } from '../stores/auth'
@@ -38,7 +37,6 @@ export const usePostsStore = defineStore("posts", {
                 const userId = authorId!=null  ? `/${authorId}` : '' ;
                 const response = await axios.get(`/posts/0${userId}`) ;
                 if(response.status == 200) {
-                    console.log("posts");
                     this.posts = response.data.data ;
                 } else {
                     notyf.success("Something went wrong");
@@ -46,26 +44,20 @@ export const usePostsStore = defineStore("posts", {
                 this.loading = false;
             },           
             async getMorePosts(offset,authorId = null) {
-                console.log("offset");
-                console.log(offset);
                 const userId = authorId!=null ? `/${authorId}` : '' ;
                 const response = await axios.get(`/posts/${offset}${userId}`) ;
                 if(response.status == 200) {
-                    console.log("posts");
                     this.posts.push(...response.data.data) ;
                 } else {
                     notyf.success("Something went wrong");
                 }
             },           
             async getPostDetail(slug) {
-                console.log("slug")
-                console.log(slug)
                 this.loading = true;
                 const authStore = userAuthStore() ;
                 const userId = authStore.user.id != null ? authStore.user.id : '' ;
                 const response = await axios.get(`/view-post/${slug}/true/${userId}`) ;
                 if(response.status == 200) {
-                    console.log(response.data)
                     this.post = response.data.data.post ;
                     this.posts = response.data.data.author_posts ;
                     let imageUrl = this.post?.image;
@@ -117,7 +109,21 @@ export const usePostsStore = defineStore("posts", {
                 const response = await axios.post('/save-post',blog) ;
                 if(response.status == 200) {
                     notyf.success(response.data.message);
-                    // router.go(-1)
+                    return true ;
+                } else {
+                    notyf.success("Something went wrong");
+                    return false ;
+                }
+            },
+            async updatePost() {
+                const blogInfo = {
+                    title : this.post.title,
+                    body: this.post.body
+                } ;
+                const response = await axios.put(`/update-post/${this.post.id}`,blogInfo) ;
+
+                if(response.status == 200) {
+                    notyf.success(response.data.message);
                     return true ;
                 } else {
                     notyf.success("Something went wrong");
