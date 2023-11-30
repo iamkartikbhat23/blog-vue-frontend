@@ -7,6 +7,7 @@ import AuthorPosts from '../pages/AuthorPosts.vue' ;
 import CreatePost from '../pages/CreatePost.vue' ;
 import EditPost from '../pages/EditPost.vue' ;
 import Login from '../pages/Login.vue' ;
+import NotFoundComponent from '../pages/NotFound.vue' ;
 import { userAuthStore } from '../stores/auth'
 
 
@@ -61,10 +62,16 @@ const routes =  [
     path: '/register-success',
     name: 'registerSuccess',
     component: RegisterSuccess
+  },
+  {
+      path: '/:catchAll(.*)', 
+      component: NotFoundComponent,
+      name: 'NotFound'
   }
 ];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  mode:'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
