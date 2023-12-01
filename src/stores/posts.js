@@ -55,8 +55,8 @@ export const usePostsStore = defineStore("posts", {
             async getPostDetail(slug) {
                 this.loading = true;
                 const authStore = userAuthStore() ;
-                const userId = authStore.user.id != null ? authStore.user.id : '' ;
-                const response = await axios.get(`/view-post/${slug}/true/${userId}`) ;
+                const userId = authStore.user.id != null ? `/${authStore.user.id}` : '' ;
+                const response = await axios.get(`/view-post/${slug}/true${userId}`) ;
                 if(response.status == 200) {
                     this.post = response.data.data.post ;
                     this.posts = response.data.data.author_posts ;
